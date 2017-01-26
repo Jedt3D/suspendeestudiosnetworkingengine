@@ -15,7 +15,7 @@ else
 {
 ds_map_add(susmap,suspath,sustxt);
 }
-
+// VALUE:  banana network_emit("open","banana"); {'open':{'banana'}}
 
 buffer_write(susbuf,buffer_text,json_encode(susmap)+global.splitter);
 ds_map_destroy(susmap);

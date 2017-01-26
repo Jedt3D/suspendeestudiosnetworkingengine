@@ -78,8 +78,8 @@ def processdata(message,client):
             for key in list(mesdat.keys()):
                 if not key in userasync[str(client)]:
                         userasync[str(client)][key] = []
-                        #JSON.DUMPS converts keys back into strings, you may remove this if you wish
-                        userasync[str(client)][key].append(json.dumps(mesdat[key]))
+                #JSON.DUMPS converts keys back into strings, you may remove this if you wish
+                userasync[str(client)][key].append(json.dumps(mesdat[key]))
     except:
         #Protects thread from crashing to baddies
         pass

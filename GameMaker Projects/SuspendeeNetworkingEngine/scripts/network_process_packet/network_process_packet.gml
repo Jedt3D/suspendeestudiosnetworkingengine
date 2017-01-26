@@ -1,5 +1,6 @@
 //Splitter is this ~§~
 //Good example "Ok~§~banana~§~one~§~"
+
 if (ds_map_find_value(async_load,"type") == network_type_data)
 {
 var buffer = ds_map_find_value(async_load,"buffer");
