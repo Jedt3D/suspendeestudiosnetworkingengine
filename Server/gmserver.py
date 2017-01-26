@@ -100,7 +100,7 @@ def emit(path,message,client):
     except:
         return False
 
-def broadcast(path,message)
+def broadcast(path,message):
     #Broadcasts message across the entire server (obviously!)
     global splitter
     emitdata = {}
