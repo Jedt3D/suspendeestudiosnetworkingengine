@@ -29,7 +29,7 @@ def addFunc(message,messfunc):
     global messlist
     funclist.append(messfunc)
     messlist.append(message)
-    print(funclist)
+    #print(funclist)
 
 
 
@@ -48,6 +48,7 @@ def useFunc():
                             if userasync[str(c)][m] != []:
                                 if messlist.index(m) == funclist.index(f):
                                     useData(m,f,c)
+                                    #print('using function')
 
 
 def useData(message,func,client):
@@ -60,7 +61,7 @@ def useData(message,func,client):
 
 def fetchdata(message,client):
     global userasync
-    print(userasync)
+    #print(userasync)
     if message in userasync[str(client)]:
         return userasync[str(client)][message]
     else:
@@ -71,7 +72,7 @@ def processdata(message,client):
     try:
         meslis = message.split("~§~")
         meslis.remove('')
-        print("Splitting it into a list for you sir.")
+        #print("Splitting it into a list for you sir.")
         for i in meslis:
             mesdat = json.loads(i)
             for key in list(mesdat.keys()):
