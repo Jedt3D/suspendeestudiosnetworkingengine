@@ -18,10 +18,9 @@ def banana(message,client):
     global splitter
     print("Printing what was in the path")
     jso = json.loads(message)
-    print(jso['data'])
-    print('Banana is activated!')
     #Note: If you send from the client the number as a string it will stay as a astirng until you convert it.
-    emit("event",str(int(jso['data'])*2),client)
+    emit("event",json.dumps({'msgid':0,'num':    str(int(jso['data'])*2) }),client)
+    emit("event",json.dumps({'msgid':1,'data':'I like bananas'})       ,client)
 
 def addFunc(message,messfunc):
     #Add functions
@@ -111,7 +110,7 @@ def handleclient(client,addr):
             userlist.remove(client)
             break;
         data = ""
-        useData("authentication",banana,client)
+        #useData("authentication",banana,client)
         try:
             data = client.recv(1024)
             processdata(data.decode('utf-8'),client)
@@ -135,7 +134,7 @@ def server(ip,port,connlimit):
     global userstorage
     global userlist
     global userasync
-    addFunc("authentication",banana)
+    #addFunc("authentication",banana)
     threading.Thread(target=useFunc,args=[]).start()
     while True:
         c, addr = s.accept()
