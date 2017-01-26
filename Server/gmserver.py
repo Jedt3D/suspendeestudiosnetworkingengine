@@ -99,6 +99,21 @@ def emit(path,message,client):
         return True
     except:
         return False
+
+def broadcast(path,message)
+    #Broadcasts message across the entire server (obviously!)
+    global splitter
+    emitdata = {}
+    emitdata[path] = message
+    emitdata["path"] = path
+    for i in userlist:
+        try:
+            i.send((json.dumps(emitdata)+splitter).encode('utf-8'))
+            return True
+        except:
+            return False
+
+
 def handleclient(client,addr):
     global splitter
     global userasync
