@@ -18,8 +18,14 @@ def auth(message,client):
     app.emit("event",json.dumps(setup),client)
     print("Sending Data")
     iden = iden + 1
-
-
+def connect(message,client):
+    print("Connect")
+def disconnect(message,client):
+    print("Disconnect")
 #app.addFunc("event",cow)
+
+
+app.addFunc("disconnect",disconnect)
+app.addFunc("connect",connect)
 app.addFunc("authentication",auth)
 app.server('0.0.0.0',14579,20)

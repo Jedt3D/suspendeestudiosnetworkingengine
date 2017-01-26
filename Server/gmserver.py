@@ -13,7 +13,19 @@ funclist = []
 messlist = []
 
 
-#Example
+#Special, Do not use connect or disconnect as paths
+def disconnect(client):
+    for i in funclist:
+        for m in messlist:
+            if messlist.index(m) == funclist.index(i) and m == "disconnect":
+                i("disconnected",client)
+def connect(client):
+    for i in funclist:
+        for m in messlist:
+            if messlist.index(m) == funclist.index(i) and m == "connect":
+                i("connected",client)
+
+
 def banana(message,client):
     global splitter
     print("Printing what was in the path")
@@ -118,11 +130,13 @@ def handleclient(client,addr):
     global splitter
     global userasync
     userasync[str(client)] = {}
+    connect(client)
     while True:
         sent = emit("event","{'msgid':0}",client)
         if not sent:
             global userlist
             print("Client from the IP Address {} has disconnected".format(str(addr[0])))
+            disconnect(client)
             userlist.remove(client)
             break;
         data = ""
@@ -134,6 +148,7 @@ def handleclient(client,addr):
             pass
         if not data:
             global userlist
+            disconnect(client)
             print("Client from the IP Address {} has disconnected".format(str(addr[0])))
             userlist.remove(client)
             break;
