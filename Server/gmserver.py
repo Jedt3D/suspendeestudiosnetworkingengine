@@ -169,7 +169,7 @@ def server(ip,port,connlimit):
     threading.Thread(target=useFunc,args=[]).start()
     while True:
         c, addr = s.accept()
-        userstorage[str(c)] = True
+        userstorage[str(c)] = {}
         userlist.append(c)
         threading.Thread(target=handleclient,args=[c,addr]).start()
 
