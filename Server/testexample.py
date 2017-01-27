@@ -8,20 +8,5 @@ def doSomething(message,client):
     app.broadcast("event","{'pie':'banana'}")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.addFunc("authentication",doSomething)
 app.server("127.0.0.1",14579,64)
