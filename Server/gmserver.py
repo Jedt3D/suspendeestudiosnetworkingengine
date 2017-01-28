@@ -26,13 +26,13 @@ def connect(client):
                 i("connected",client)
 
 
-def banana(message,client):
-    global splitter
-    print("Printing what was in the path")
-    jso = json.loads(message)
+#def banana(message,client):
+    #global splitter
+    #print("Printing what was in the path")
+    #jso = json.loads(message)
     #Note: If you send from the client the number as a string it will stay as a astirng until you convert it.
-    emit("event",json.dumps({'msgid':0,'num':    str(int(jso['data'])*2) }),client)
-    emit("event",json.dumps({'msgid':1,'data':'I like bananas'})       ,client)
+    #emit("event",json.dumps({'msgid':0,'num':    str(int(jso['data'])*2) }),client)
+    #emit("event",json.dumps({'msgid':1,'data':'I like bananas'})       ,client)
 
 def addFunc(message,messfunc):
     #Add functions
@@ -66,7 +66,8 @@ def useData(message,func,client):
     if str(client) in userasync:
         if message in userasync[str(client)]:
             for i in userasync[str(client)][message]:
-                func(i,client)
+                threading.Thread(target=func,args=[i,client]).start()
+                #func(i,client)
             userasync[str(client)][message] = []
 
 def fetchdata(message,client):
@@ -89,7 +90,9 @@ def processdata(message,client):
                 if not key in userasync[str(client)]:
                         userasync[str(client)][key] = []
                 #JSON.DUMPS converts keys back into strings, you may remove this if you wish
-                userasync[str(client)][key].append(json.dumps(mesdat[key]))
+                #This checks if the key is disconnect or connect (to prevent baddies from tricking the server)
+                if key != "connect" and key != "disconnect":
+                    userasync[str(client)][key].append(mesdat[key])
     except:
         #Protects thread from crashing to baddies
         pass
@@ -109,6 +112,8 @@ def emit(path,message,client):
         return True
     except:
         return False
+
+
 
 def broadcast(path,message):
     #Broadcasts message across the entire server (obviously!)
@@ -130,13 +135,13 @@ def handleclient(client,addr):
     userasync[str(client)] = {}
     connect(client)
     while True:
-        sent = emit("event","{'msgid':0}",client)
-        if not sent:
-            global userlist
-            print("Client from the IP Address {} has disconnected".format(str(addr[0])))
-            disconnect(client)
-            userlist.remove(client)
-            break;
+        #sent = emit("event","{'msgid':0}",client)
+        #if not sent:
+            #global userlist
+            #print("Client from the IP Address {} has disconnected".format(str(addr[0])))
+            #disconnect(client)
+            #userlist.remove(client)
+            #break;
         data = ""
         #useData("authentication",banana,client)
         try:
