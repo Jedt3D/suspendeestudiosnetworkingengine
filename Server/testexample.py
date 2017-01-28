@@ -4,7 +4,7 @@ app = gmserver
 
 
 def doSomething(message,client):
-    app.emit("event",json.loads(message),client)
+    app.emit("event",message,client)
     app.broadcast("event","{'pie':'banana'}")
 
 

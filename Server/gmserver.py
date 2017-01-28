@@ -53,13 +53,11 @@ def useFunc():
         global messlist
         global userasync
         for f in funclist:
-            for m in messlist:
-                for c in userlist:
-                    if str(c) in userasync:
-                        if m in userasync[str(c)]:
-                            if userasync[str(c)][m] != []:
-                                if messlist.index(m) == funclist.index(f):
-                                    useData(m,f,c)
+            for c in userlist:
+                if str(c) in userasync:
+                    if messlist[funclist.index(f)] in userasync[str(c)]:
+                        if userasync[str(c)][messlist[funclist.index(f)]] != []:
+                            useData(messlist[funclist.index(f)],f,c)
                                     #print('using function')
 
 
