@@ -123,11 +123,8 @@ def broadcast(path,message):
     emitdata[path] = message
     emitdata["path"] = path
     for i in userlist:
-        try:
-            i.send((json.dumps(emitdata)+splitter).encode('utf-8'))
-            return True
-        except:
-            return False
+       i.send((json.dumps(emitdata)+splitter).encode('utf-8'))
+
 
 
 def handleclient(client,addr):
