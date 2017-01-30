@@ -13,7 +13,7 @@ funclist = []
 messlist = []
 
 
-#Special, Do not use connect or disconnect as paths
+#Special, Do not use connect or disconnect as paths when sending from client
 def disconnect(client):
     for i in funclist:
         for m in messlist:
@@ -117,6 +117,7 @@ def emit(path,message,client):
 
 def broadcast(path,message):
     #Broadcasts message across the entire server (obviously!)
+    global userlist
     global splitter
     emitdata = {}
     emitdata[path] = message

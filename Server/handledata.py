@@ -10,7 +10,7 @@ def data(message,client):
     mes = json.loads(message)
     print(mes)
     print(mes['text'])
-
+    app.broadcast('event',json.dumps({'text':'oowowowowowo'}))
 
 
 print("Server Started")
