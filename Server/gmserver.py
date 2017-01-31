@@ -6,6 +6,7 @@ import os
 userstorage = {}
 userlist = []
 userasync = {}
+session = {}
 #Splitter, indicates the end of the message
 splitter = "~§~"
 #List of functions to use for each user
@@ -97,6 +98,25 @@ def processdata(message,client):
         #Protects thread from crashing to baddies
         pass
 
+def sessionset(variable,value,client):
+    global session
+    if str(client) in session:
+        session[str(client)][variable] = value
+    else:
+        session[str(client)] = {}
+        session[str(client)][variable] = value
+
+def sessionrequest(variable,client):
+    global session
+    if str(client) in session:
+        if variable in session[str(client)]:
+            return session[str(client)][variable]
+        else:
+            return None
+    else:
+        session[str(client)] = {}
+        return None
+
 
 
 def emit(path,message,client):
@@ -133,15 +153,7 @@ def handleclient(client,addr):
     userasync[str(client)] = {}
     connect(client)
     while True:
-        #sent = emit("event","{'msgid':0}",client)
-        #if not sent:
-            #global userlist
-            #print("Client from the IP Address {} has disconnected".format(str(addr[0])))
-            #disconnect(client)
-            #userlist.remove(client)
-            #break;
         data = ""
-        #useData("authentication",banana,client)
         try:
             data = client.recv(1024)
             processdata(data.decode('utf-8'),client)
@@ -153,9 +165,8 @@ def handleclient(client,addr):
             print("Client from the IP Address {} has disconnected".format(str(addr[0])))
             userlist.remove(client)
             break;
-        #print(data)
         datv = fetchdata("authentication",client)
-        #print(json.loads(datv[0]))
+        
 
 
 

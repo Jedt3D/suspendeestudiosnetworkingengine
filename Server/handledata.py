@@ -3,6 +3,9 @@ import json
 app = gmserver
 
 def auth(message,client):
+    app.sessionset("x",{'ok':'data'},client)
+    dat = app.sessionrequest("x",client)
+    print(list(dat.keys()))
     app.emit("event",json.dumps({'text':message.upper()}),client)
 
 def data(message,client):
