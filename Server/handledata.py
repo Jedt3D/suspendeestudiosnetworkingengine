@@ -13,7 +13,6 @@ def data(message,client):
     print(message)
     print('printing {}'.format(message['text']))
     print(message['text'])
-    print(message['text'])
     app.broadcast('event',{'text':'oowowowowowo'})
 
 
