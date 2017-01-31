@@ -6,14 +6,17 @@ def auth(message,client):
     app.sessionset("x",{'ok':'data'},client)
     dat = app.sessionrequest("x",client)
     print(list(dat.keys()))
-    app.emit("event",json.dumps({'text':message.upper()}),client)
+    app.emit("event",{'text':message.upper()},client)
 
 def data(message,client):
+    print('data being received')
     print(message)
-    mes = json.loads(message)
-    print(mes)
-    print(mes['text'])
-    app.broadcast('event',json.dumps({'text':'oowowowowowo'}))
+    print('printing {}'.format(message['text']))
+    print(message['text'])
+
+    #print(mes)
+    #print(mes['text'])
+    app.broadcast('event',{'text':'oowowowowowo'})
 
 
 print("Server Started")
