@@ -54,11 +54,12 @@ def useFunc():
         global messlist
         global userasync
         for f in funclist:
+            mes = messlist[funclist.index(f)]
             for c in userlist:
                 if str(c) in userasync:
-                    if messlist[funclist.index(f)] in userasync[str(c)]:
-                        if userasync[str(c)][messlist[funclist.index(f)]] != []:
-                            useData(messlist[funclist.index(f)],f,c)
+                    if mes in userasync[str(c)]:
+                        if userasync[str(c)][mes] != []:
+                            useData(mes,f,c)
                                     #print('using function')
 
 
@@ -166,7 +167,7 @@ def handleclient(client,addr):
             userlist.remove(client)
             break;
         datv = fetchdata("authentication",client)
-        
+
 
 
 
