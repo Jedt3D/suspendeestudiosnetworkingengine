@@ -107,6 +107,30 @@ def sessionset(variable,value,client):
         session[str(client)] = {}
         session[str(client)][variable] = value
 
+def sessionvariables(client):
+    #Summons list of all variables stored for the client
+    global session
+    if not str(client) in session:
+        return []
+    else:
+        if session[str(client)].keys() != None:
+            return list(session[str(client)].keys())
+        else:
+            return []
+
+def sessiongetlist(variable,value):
+    #Gets list of clients with their variables equal
+    global userlist
+    global session
+    templist = []
+    for c in userlist:
+        if str(c) in session:
+            if variable in session[str(c)]:
+                if session[str(c)][variable] == value:
+                    templist.append(c)
+    return templist
+
+
 def sessionrequest(variable,client):
     global session
     if str(client) in session:
