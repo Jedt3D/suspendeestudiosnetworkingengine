@@ -1,6 +1,5 @@
 #define network_connect_tcp
 global.listener = ds_map_create();
-global.listenerlist = ds_list_create();
 global.socket = network_create_socket(network_socket_tcp);
 global.server = network_connect_raw(global.socket,argument0,argument1);
 global.splitter = "~§~"
@@ -14,7 +13,6 @@ var path = argument0;
 var script = argument1;
 
 ds_map_add(global.listener,path,script);
-ds_list_add(global.listenerlist,path);
 
 
 #define network_emit
@@ -58,7 +56,6 @@ if (ds_map_find_value(async_load,'type') == network_type_data)
 {
 var buffer = ds_map_find_value(async_load,'buffer');
 str = buffer_read(ds_map_find_value(async_load,'buffer'),buffer_text);
-
 map = ds_map_create();
 //show_message(str)
 while (string_pos("~§~",str) != 0)
@@ -66,20 +63,22 @@ while (string_pos("~§~",str) != 0)
 
 var susdat = json_decode( string_copy(str,0,string_pos("~§~",str)-1));
 
-    for (i=0;i<ds_list_size(global.listenerlist);i++)
-    {  var listenerlist = global.listenerlist[| i];
-        if (susdat[? "path"] == listenerlist && ds_map_exists(susdat,listenerlist))
+    if (ds_map_exists(global.listener,susdat[? 'path']))
        { 
        
         script_execute( ds_map_find_value(global.listener, susdat[? "path"])
-        ,susdat[? "path"],ds_map_find_value( susdat,listenerlist) 
+        ,susdat[? "path"],ds_map_find_value( susdat,susdat[? "path"]) 
         )
         }
        
-    }
+    
 ds_map_destroy(susdat);
-str = string_delete(str,1,string_pos("~§~",str)+2)
+str = string_delete(str,1,string_pos(global.splitter,str)-1+string_length(global.splitter))
 }
 }
 
+
+#define network_disconnect
+network_destroy(global.socket);
+ds_map_destroy(global.listener);
 
